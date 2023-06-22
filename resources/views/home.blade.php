@@ -3,8 +3,7 @@
 @section('content')
 <div class="container">
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+   <pagina tamanho="7">
             <card titulo="Dashboard">
                 Teste de conteúdo
                 <div class="row">
@@ -29,9 +28,7 @@
 {{--                    </div>--}}
                 </div>
             </card>
-
-        </div>
-    </div>
+   </pagina>
 
 
 
