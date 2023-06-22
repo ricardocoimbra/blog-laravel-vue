@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArtigosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function () {
+    Route::resources([
+        'artigos' => ArtigosController::class,
+    ]);
+});
