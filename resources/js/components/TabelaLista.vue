@@ -5,7 +5,7 @@
                 <a class="btn btn-primary mb-2" v-if="criar" :href="criar">Criar</a>
             </div>
             <div class="col-3">
-                <input class="form-control" type="search" placeholder="Buscar" v-model="buscar"> {{ buscar }}
+                <input class="form-control" type="search" placeholder="Buscar" v-model="buscar">
             </div>
         </div>
 
@@ -18,7 +18,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(item, index) in itens">
+            <tr v-for="(item, index) in lista">
                 <td v-for="i in item"> {{ i }}</td>
 
                 <td v-if="detalhes || editar || deletar">
@@ -58,6 +58,18 @@ export default {
     methods: {
         executaForm (index) {
             document.getElementById(index).submit();
+        }
+    },
+    computed: {
+        lista () {
+            return this.itens.filter(res => {
+                for (let k = 0; k < res.length; k++) {
+                    if ((res[k] + "").toLowerCase().indexOf(this.buscar.toLowerCase()) >= 0) {
+                        return true;
+                    }
+                }
+                return false;
+            });
         }
     }
 
