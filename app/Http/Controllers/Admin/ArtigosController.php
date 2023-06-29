@@ -16,7 +16,11 @@ class ArtigosController extends Controller
             ["titulo" => "Home", "url" => route("home")],
             ["titulo" => "Artigos", "url" => ''],
         ]);
-        return view('admin.artigos.index', compact('listaMigalhas'));
+        $listaArtigos = json_encode([
+            [1, 'PHP OO', 'Curso de PHP OO', 'Ricardo Coimbra', '10/10/2022'],
+            [2, 'VueJS', 'Curso de VueJS', 'Ricardo Coimbra', '10/11/2022']
+        ]);
+        return view('admin.artigos.index', compact('listaMigalhas', 'listaArtigos'));
     }
 
     /**

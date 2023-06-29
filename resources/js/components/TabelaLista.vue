@@ -2,7 +2,8 @@
     <div>
         <div class="row justify-content-between">
             <div class="col-3">
-                <a class="btn btn-primary mb-2" v-if="criar" :href="criar">Criar</a>
+                <a v-if="criar && !modal" class="btn btn-primary mb-2" :href="criar">Criar</a>
+                <modal-link v-if="criar && modal" tipo="link" nome="adicionar" titulo="Criar" css=""></modal-link>
             </div>
             <div class="col-3">
                 <input class="form-control" type="search" placeholder="Buscar" v-model="buscar">
@@ -27,17 +28,20 @@
                         <input type="hidden" name="_token" :value="token">
 
                         <a v-if="detalhes" :href="detalhes">Detalhes |</a>
-                        <a v-if="editar" :href="editar"> Editar |</a>
+                        <a v-if="editar && !modal" :href="editar"> Editar |</a>
+                        <modal-link v-if="editar && modal" tipo="link" nome="editar" titulo=" Editar |" css=""></modal-link>
                         <a href="#" @click="executaForm(index)"> Deletar</a>
                     </form>
                     <span v-if="!token">
                     <a v-if="detalhes" :href="detalhes">Detalhes |</a>
-                    <a v-if="editar" :href="editar">Editar |</a>
+                    <a v-if="editar && !modal" :href="editar"> Editar |</a>
+                        <modal-link v-if="editar && modal" tipo="link" nome="editar" titulo=" Editar |" css=""></modal-link>
                     <a v-if="deletar" :href="deletar">Deletar</a>
                 </span>
                     <span v-if="token && !deletar">
                     <a v-if="detalhes" :href="detalhes">Detalhes |</a>
-                    <a v-if="editar" :href="editar"> Editar</a>
+                    <a v-if="editar && !modal" :href="editar"> Editar</a>
+                        <modal-link v-if="editar && modal" tipo="link" nome="editar" titulo=" Editar" css=""></modal-link>
                 </span>
                 </td>
             </tr>
@@ -47,9 +51,12 @@
 </template>
 
 <script>
+import ModalLink from "./modal/ModalLink.vue";
+
 export default {
     name: 'TabelaLista',
-    props: ['titulos', 'itens', 'ordem', 'ordemcol', 'criar', 'detalhes', 'editar', 'deletar', 'token'],
+    components: {ModalLink},
+    props: ['titulos', 'itens', 'ordem', 'ordemcol', 'criar', 'detalhes', 'editar', 'deletar', 'token', 'modal'],
     data () {
         return {
             buscar: '',
@@ -78,27 +85,30 @@ export default {
             ordemCol = parseInt(ordemCol);
 
             if (ordem === "asc") {
-                this.itens.sort((a, b) => {
-                    if (a[ordemCol] > b[ordemCol]) {return 1;}
-                    if (a[ordemCol] < b[ordemCol]) {return -1;}
+                this.itens.sort(function (a, b) {
+                    if (Object.values(a)[ordemCol] > Object.values(b)[ordemCol]) {return 1;}
+                    if (Object.values(a)[ordemCol] < Object.values(b)[ordemCol]) {return -1;}
                     return 0;
                 });
             } else {
-                this.itens.sort((a, b) => {
-                    if (a[ordemCol] < b[ordemCol]) {return 1;}
-                    if (a[ordemCol] > b[ordemCol]) {return -1;}
+                this.itens.sort(function (a, b) {
+                    if (Object.values(a)[ordemCol] < Object.values(b)[ordemCol]) {return 1;}
+                    if (Object.values(a)[ordemCol] > Object.values(b)[ordemCol]) {return -1;}
                     return 0;
                 });
             }
 
-            return this.itens.filter(res => {
-                for (let k = 0; k < res.length; k++) {
-                    if ((res[k] + "").toLowerCase().indexOf(this.buscar.toLowerCase()) >= 0) {
-                        return true;
+            if (this.buscar) {
+                return this.itens.filter(res => {
+                    for (let k = 0; k < res.length; k++) {
+                        if ((res[k] + "").toLowerCase().indexOf(this.buscar.toLowerCase()) >= 0) {
+                            return true;
+                        }
                     }
-                }
-                return false;
-            });
+                    return false;
+                });
+            }
+            return this.itens;
         }
     }
 
