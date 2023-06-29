@@ -16,26 +16,20 @@
                     ordem="desc" ordemcol="1"
                     criar="{{route('artigos.create')}}" detalhes="#detalhes" editar="#editar" deletar="#deletar" token="#token"
                 ></tabela-lista>
-
             </card>
         </pagina>
         <modal-view nome="meuModalTeste">
-            <form>
+            <formulario classe="" action="#" method="put" enctype="multipart/form-data" token="123456">
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <label for="titulo" class="form-label">Título</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição">
                 </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+                <button type="submit" class="btn btn-info">Adicionar</button>
+            </formulario>
         </modal-view>
 
 
